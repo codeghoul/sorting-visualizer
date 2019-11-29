@@ -30,7 +30,7 @@ class SortingVisualizer extends Component {
     );
 
     animations.map((animation, index) =>
-      setTimeout(() => this.props.swap(animation), index * 10)
+      setTimeout(() => this.props.swap(animation), index * 100)
     );
   };
 

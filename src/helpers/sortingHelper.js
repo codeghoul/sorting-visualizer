@@ -6,6 +6,9 @@ const getAnimations = (sortType, numbers) => {
     case constants.BUBBLE_SORT:
       animations = getBubbleSortAnimations(numbers);
       break;
+    case constants.SELECTION_SORT:
+      animations = getSelectionSortAnimations(numbers);
+      break;
     default:
       animations = [];
   }
@@ -16,14 +19,36 @@ const getBubbleSortAnimations = numbers => {
   return bubbleSort(numbers);
 };
 
-const swap = (arr, first_Index, second_Index) => {
-  var temp = arr[first_Index];
-  arr[first_Index] = arr[second_Index];
-  arr[second_Index] = temp;
+const getSelectionSortAnimations = numbers => {
+  return selectionSort(numbers);
+};
+
+const selectionSort = arr => {
+  let len = arr.length;
+  let animations = [];
+  for (let i = 0; i < len; i++) {
+    let min = i;
+    for (let j = i + 1; j < len; j++) {
+      if (arr[min] > arr[j]) {
+        min = j;
+      }
+    }
+    if (min !== i) {
+      animations.push([min, i]);
+      swap(arr, min, i);
+    }
+  }
+  return animations;
+};
+
+const swap = (arr, index1, index2) => {
+  var temp = arr[index1];
+  arr[index1] = arr[index2];
+  arr[index2] = temp;
 };
 
 const bubbleSort = arr => {
-  var len = arr.length,
+  let len = arr.length,
     i,
     j,
     stop;
