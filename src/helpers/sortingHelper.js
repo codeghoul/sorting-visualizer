@@ -9,6 +9,9 @@ const getAnimations = (sortType, numbers) => {
     case constants.SELECTION_SORT:
       animations = getSelectionSortAnimations(numbers);
       break;
+    case constants.INSERTION_SORT:
+      animations = getInsertionSortAnimations(numbers);
+      break;
     default:
       animations = [];
   }
@@ -21,6 +24,26 @@ const getBubbleSortAnimations = numbers => {
 
 const getSelectionSortAnimations = numbers => {
   return selectionSort(numbers);
+};
+
+const getInsertionSortAnimations = numbers => {
+  return insertionSort(numbers);
+};
+
+const insertionSort = arr => {
+  let len = arr.length;
+  let animations = [];
+
+  for (let i = 1; i < len; i++) {
+    let j = i;
+    while (j > 0 && arr[j] < arr[j - 1]) {
+      animations.push([j, j - 1]);
+      swap(arr, j, j - 1);
+      j--;
+    }
+  }
+
+  return animations;
 };
 
 const selectionSort = arr => {
