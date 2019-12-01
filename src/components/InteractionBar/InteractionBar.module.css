@@ -1,7 +1,20 @@
 .InteractionBar {
+  width: 90%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-content: center;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.InteractionBar > * {
+  flex: 1 100%;
+}
+
+.BarGroup {
+  align-self: center;
+  display: flex;
+  justify-content: space-evenly;
+  align-content: center;
+  flex-direction: row;
 }

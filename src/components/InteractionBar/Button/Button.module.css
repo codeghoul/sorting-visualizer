@@ -11,29 +11,27 @@
   display: inline-block;
   font-size: 12px;
   cursor: pointer;
-  behavior: button;
- }
+}
 
 .Button:hover {
   background-position: right center; /* change the direction of the change here */
 }
 
-.Button1 {
-  background-image: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%);
-}
-
-.Button2 {
-  background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
-}
-
 .Button3 {
-  background-image: linear-gradient(to right, #00b09b,  #96c93d);
+  background-image: -webkit-linear-gradient(to right, #00b09b, #96c93d);
+  background-image: linear-gradient(to right, #00b09b, #96c93d);
 }
 
-.Button4 {
-  background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);
-}
-
-.Button5 {
-  background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 51%, #ffecd2 100%);
+.Disabled {
+  background-image: #bdc3c7; /* fallback for old browsers */
+  background-image: -webkit-linear-gradient(
+    to right,
+    #2c3e50,
+    #bdc3c7
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background-image: linear-gradient(
+    to right,
+    #2c3e50,
+    #bdc3c7
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }

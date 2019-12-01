@@ -9,8 +9,8 @@ const range = props => (
     value={props.default}
     min={props.min}
     max={props.max}
-    onInput={props.changed}
     onChange={props.changed}
+    step={50}
   />
 );
 

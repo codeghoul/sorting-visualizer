@@ -21,26 +21,41 @@ const interactionBar = props => {
       sortType: constants.INSERTION_SORT,
       displayName: "Insertion Sort",
       animationSpeed: 50
+    },
+    {
+      sortType: constants.MERGE_SORT,
+      displayName: "Merge Sort",
+      animationSpeed: 50
+    },
+    {
+      sortType: constants.QUICK_SORT,
+      displayName: "Quick Sort",
+      animationSpeed: 50
     }
   ];
   return (
     <div className={classes.InteractionBar}>
-      <Button clicked={props.reset}>Reset</Button>
-      <Range
-        min="5"
-        max="300"
-        default={props.barCount}
-        changed={event => props.changeBarCount(event.target.value)}
-      />
-      {sortDetails.map(sortDetail => (
-        <Button
-          key={sortDetail.sortType}
-          clicked={() => props.changeSortDetail(sortDetail)}
-        >
-          {sortDetail.displayName}
-        </Button>
-      ))}
-      <Button clicked={props.commence}>Commence Sort!</Button>
+      <div className={classes.BarGroup}>
+        <Button clicked={props.reset}>Reset</Button>
+        <Range
+          min="5"
+          max="255"
+          default={props.barCount}
+          changed={event => props.changeBarCount(event.target.value)}
+        />
+        <Button clicked={props.commence}>Commence Sort!</Button>
+      </div>
+      <div className={classes.BarGroup}>
+        {sortDetails.map(sortDetail => (
+          <Button
+            disabled={sortDetail.sortType !== props.sortDetail.sortType}
+            key={sortDetail.sortType}
+            clicked={() => props.changeSortDetail(sortDetail)}
+          >
+            {sortDetail.displayName}
+          </Button>
+        ))}
+      </div>
     </div>
   );
 };

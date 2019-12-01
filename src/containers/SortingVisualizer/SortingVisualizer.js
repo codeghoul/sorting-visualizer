@@ -16,7 +16,7 @@ class SortingVisualizer extends Component {
       animationSpeed: 50
     },
     numbers: [],
-    barCount: 50
+    barCount: 55
   };
 
   componentDidMount = () => {
@@ -52,7 +52,7 @@ class SortingVisualizer extends Component {
   };
 
   handleBarCountChange = barCount => {
-    const newNumbers = getRandomNumbers(this.state.barCount);
+    const newNumbers = getRandomNumbers(barCount);
     this.setState({ ...this.state, numbers: newNumbers, barCount: barCount });
   };
 
