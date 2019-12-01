@@ -1,65 +1,82 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 
 import BarsContainer from "../../components/BarsContainer/BarsContainer";
 
 import classes from "./SortingVisualizer.module.css";
 
-import * as actions from "../../store/actions/actions";
 import * as constants from "../../constants/constants";
 import getAnimations from "../../helpers/sortingHelper";
 import InteractionBar from "../../components/InteractionBar/InteractionBar";
 
 class SortingVisualizer extends Component {
   state = {
-    sortType: constants.BUBBLE_SORT
+    sortDetail: {
+      sortType: constants.BUBBLE_SORT,
+      displayName: "Bubble Sort",
+      animationSpeed: 50
+    },
+    numbers: []
   };
 
   componentDidMount = () => {
-    this.props.reset();
+    this.handleReset();
   };
 
-  handleSortTypeChange = sortType => {
-    this.setState({ ...this.state, sortType: sortType });
+  handleSortDetailChange = sortDetail => {
+    this.setState({ ...this.state, sortDetail: sortDetail });
   };
 
   handleCommenceSort = () => {
     const animations = getAnimations(
-      this.state.sortType,
-      this.props.numbers.slice()
+      this.state.sortDetail.sortType,
+      this.state.numbers.slice()
     );
 
     animations.map((animation, index) =>
-      setTimeout(() => this.props.swap(animation), (1000 / 60) * index)
+      setTimeout(() => this.handleSwap(animation), (1000 / 60) * index)
     );
+  };
+
+  handleSwap = indices => {
+    const newNumbers = this.state.numbers.slice();
+    const number = newNumbers[indices[0]];
+    newNumbers[indices[0]] = newNumbers[indices[1]];
+    newNumbers[indices[1]] = number;
+    this.setState({ ...this.state, numbers: newNumbers });
+  };
+
+  handleReset = () => {
+    const newNumbers = getRandomNumbers();
+    this.setState({ ...this.state, numbers: newNumbers });
   };
 
   render() {
     return (
       <div className={classes.SortingVisualizer}>
-        <BarsContainer numbers={this.props.numbers} />
+        <BarsContainer numbers={this.state.numbers} />
         <InteractionBar
-          reset={() => this.props.reset()}
+          reset={() => this.handleReset()}
           commence={() => this.handleCommenceSort()}
-          changeSortType={sortType => this.handleSortTypeChange(sortType)}
-          sortType={this.state.sortType}
+          changeSortDetail={sortDetail =>
+            this.handleSortDetailChange(sortDetail)
+          }
+          sortDetail={this.state.sortDetail}
         />
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    numbers: state.numbers
-  };
+const getRandomNumbers = () => {
+  let numbers = [];
+  for (let i = 0; i < constants.NUMBER_OF_ARRAY_BARS; i++) {
+    numbers.push(getRandomInt(20, 599));
+  }
+  return numbers;
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    reset: () => dispatch(actions.resetNumbers()),
-    swap: indices => dispatch(actions.swap(indices))
-  };
+const getRandomInt = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SortingVisualizer);
+export default SortingVisualizer;

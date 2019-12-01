@@ -5,24 +5,27 @@ import classes from "./InteractionBar.module.css";
 import * as constants from "../../constants/constants";
 
 const interactionBar = props => {
-  const options = [
+  const sortDetails = [
     {
       sortType: constants.BUBBLE_SORT,
-      displayName: "Bubble Sort"
+      displayName: "Bubble Sort",
+      animationSpeed: 50
     },
     {
       sortType: constants.SELECTION_SORT,
-      displayName: "Selection Sort"
+      displayName: "Selection Sort",
+      animationSpeed: 50
     },
     {
       sortType: constants.INSERTION_SORT,
-      displayName: "Insertion Sort"
+      displayName: "Insertion Sort",
+      animationSpeed: 50
     }
   ];
   return (
     <div className={classes.InteractionBar}>
       <Button clicked={props.reset}>Reset</Button>
-      <Button clicked={() => props.changeSortType(constants.BUBBLE_SORT)}>
+      {/* <Button clicked={() => props.changeSortType(constants.BUBBLE_SORT)}>
         Bubble Sort
       </Button>
       <Button clicked={() => props.changeSortType(constants.INSERTION_SORT)}>
@@ -30,7 +33,15 @@ const interactionBar = props => {
       </Button>
       <Button clicked={() => props.changeSortType(constants.SELECTION_SORT)}>
         Selection Sort
-      </Button>
+      </Button> */}
+      {sortDetails.map(sortDetail => (
+        <Button
+          key={sortDetail.sortType}
+          clicked={() => props.changeSortDetail(sortDetail)}
+        >
+          {sortDetail.displayName}
+        </Button>
+      ))}
       <Button clicked={props.commence}>Commence Sort!</Button>
     </div>
   );
