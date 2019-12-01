@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "./Button/Button";
+import Range from "./Range/Range";
 import classes from "./InteractionBar.module.css";
 
 import * as constants from "../../constants/constants";
@@ -25,15 +26,12 @@ const interactionBar = props => {
   return (
     <div className={classes.InteractionBar}>
       <Button clicked={props.reset}>Reset</Button>
-      {/* <Button clicked={() => props.changeSortType(constants.BUBBLE_SORT)}>
-        Bubble Sort
-      </Button>
-      <Button clicked={() => props.changeSortType(constants.INSERTION_SORT)}>
-        Insertion Sort
-      </Button>
-      <Button clicked={() => props.changeSortType(constants.SELECTION_SORT)}>
-        Selection Sort
-      </Button> */}
+      <Range
+        min="5"
+        max="300"
+        default={props.barCount}
+        changed={event => props.changeBarCount(event.target.value)}
+      />
       {sortDetails.map(sortDetail => (
         <Button
           key={sortDetail.sortType}

@@ -15,7 +15,8 @@ class SortingVisualizer extends Component {
       displayName: "Bubble Sort",
       animationSpeed: 50
     },
-    numbers: []
+    numbers: [],
+    barCount: 50
   };
 
   componentDidMount = () => {
@@ -46,8 +47,13 @@ class SortingVisualizer extends Component {
   };
 
   handleReset = () => {
-    const newNumbers = getRandomNumbers();
+    const newNumbers = getRandomNumbers(this.state.barCount);
     this.setState({ ...this.state, numbers: newNumbers });
+  };
+
+  handleBarCountChange = barCount => {
+    const newNumbers = getRandomNumbers(this.state.barCount);
+    this.setState({ ...this.state, numbers: newNumbers, barCount: barCount });
   };
 
   render() {
@@ -55,11 +61,13 @@ class SortingVisualizer extends Component {
       <div className={classes.SortingVisualizer}>
         <BarsContainer numbers={this.state.numbers} />
         <InteractionBar
+          barCount={this.state.barCount}
           reset={() => this.handleReset()}
           commence={() => this.handleCommenceSort()}
           changeSortDetail={sortDetail =>
             this.handleSortDetailChange(sortDetail)
           }
+          changeBarCount={value => this.handleBarCountChange(value)}
           sortDetail={this.state.sortDetail}
         />
       </div>
@@ -67,9 +75,9 @@ class SortingVisualizer extends Component {
   }
 }
 
-const getRandomNumbers = () => {
+const getRandomNumbers = count => {
   let numbers = [];
-  for (let i = 0; i < constants.NUMBER_OF_ARRAY_BARS; i++) {
+  for (let i = 0; i < count; i++) {
     numbers.push(getRandomInt(20, 599));
   }
   return numbers;
