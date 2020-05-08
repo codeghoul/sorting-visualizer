@@ -1,16 +1,12 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import classes from "./Bar.module.css";
 
-class Bar extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.height !== this.props.height;
-  }
-
+class Bar extends PureComponent {
   render() {
     return (
       <div
         className={classes.Bar}
-        style={{ height: `${this.props.height / 599 * 100}%` }}
+        style={{ height: `${(this.props.height / 599) * 100}%` }}
       ></div>
     );
   }
