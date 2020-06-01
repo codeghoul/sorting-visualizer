@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./Button/Button";
 import Range from "./Range/Range";
-import classes from "./InteractionBar.module.css";
+// import classes from "./InteractionBar.module.css";
 
 import * as constants from "../../constants/constants";
 
@@ -34,8 +34,8 @@ const interactionBar = props => {
     }
   ];
   return (
-    <div className={classes.InteractionBar}>
-      <div className={classes.BarGroup}>
+    <div className="w-11/12 p-4 flex flex-col flex-shrink">
+      <div className="">
         <Button clicked={props.reset}>Reset</Button>
         <Range
           min="5"
@@ -45,7 +45,7 @@ const interactionBar = props => {
         />
         <Button clicked={props.commence}>Commence Sort!</Button>
       </div>
-      <div className={classes.BarGroup}>
+      <div className="">
         {sortDetails.map(sortDetail => (
           <Button
             disabled={sortDetail.sortType !== props.sortDetail.sortType}

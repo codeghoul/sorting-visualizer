@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Button.module.css";
 
 const button = props => {
-  const allClasses = [classes.Button];
+  const allClasses = [classes.Button, 'text-xs'];
   if (props.disabled) {
     allClasses.push(classes.Disabled);
   } else {

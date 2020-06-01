@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
-import BarsContainer from "../../components/BarsContainer/BarsContainer";
-
-import classes from "./SortingVisualizer.module.css";
+import BarsContainer from "../../components/BarsContainer";
 
 import * as constants from "../../constants/constants";
 import getAnimations from "../../helpers/sortingHelper";
@@ -69,7 +67,7 @@ const SortingVisualizer = () => {
   };
 
   return (
-    <div className={classes.SortingVisualizer}>
+    <div className="flex flex-col items-center w-full h-screen">
       <BarsContainer numbers={numbers} />
       <InteractionBar
         barCount={barCount}
@@ -86,7 +84,7 @@ const SortingVisualizer = () => {
 const getRandomNumbers = (count) => {
   let numbers = [];
   for (let i = 0; i < count; i++) {
-    numbers.push(getRandomInt(20, 599));
+    numbers.push(getRandomInt(3, 299));
   }
   return numbers;
 };

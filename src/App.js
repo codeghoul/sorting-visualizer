@@ -1,10 +1,9 @@
 import React from "react";
-import "./App.css";
 import SortingVisualizer from "./containers/SortingVisualizer/SortingVisualizer";
 
 const App = () => {
   return (
-    <div className="App">
+    <div className="app min-h-screen w-full">
       <SortingVisualizer />
     </div>
   );
