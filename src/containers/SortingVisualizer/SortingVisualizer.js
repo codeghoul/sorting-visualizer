@@ -10,7 +10,6 @@ const SortingVisualizer = () => {
   const [sortDetails, setSortDetails] = useState({
     sortType: constants.BUBBLE_SORT,
     displayName: "Bubble Sort",
-    animationSpeed: 50,
   });
 
   const [numbers, setNumbers] = useState(getRandomNumbers(55));
@@ -25,6 +24,10 @@ const SortingVisualizer = () => {
   };
 
   const handleCommenceSort = () => {
+    if(animationId !== undefined) {
+      return;
+    }
+
     const animations = getAnimations(sortDetails.sortType, numbers.slice());
 
     if (animations === null || animations.length === 0) {
