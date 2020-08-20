@@ -104,9 +104,7 @@ const quickSortWrapper = (arr) => {
 };
 
 const quickSort = (arr, animations, left, right) => {
-  let len = arr.length,
-    pivot,
-    partitionIndex;
+  let pivot, partitionIndex;
 
   if (left < right) {
     pivot = right;

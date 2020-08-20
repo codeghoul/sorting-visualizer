@@ -9,16 +9,18 @@ import InteractionBar from "../../components/InteractionBar/InteractionBar";
 class SortingVisualizer extends React.Component {
   constructor(props) {
     super(props);
+    const numbers = getRandomNumbers(55);
+    const animations = getAnimations(constants.BUBBLE_SORT, numbers.slice());
     this.state = {
       sortDetails: {
         sortType: constants.BUBBLE_SORT,
         displayName: "Bubble Sort",
         animationSpeed: 50,
       },
-      numbers: getRandomNumbers(55),
+      numbers: numbers,
       barCount: 55,
       animationId: undefined,
-      animations: [],
+      animations: animations,
     };
   }
 
