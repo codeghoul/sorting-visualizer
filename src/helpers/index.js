@@ -18,19 +18,19 @@ const getAnimations = (sortType, numbers) => {
   return animations;
 };
 
-const getBubbleSortAnimations = numbers => {
+const getBubbleSortAnimations = (numbers) => {
   return bubbleSort(numbers);
 };
 
-const getSelectionSortAnimations = numbers => {
+const getSelectionSortAnimations = (numbers) => {
   return selectionSort(numbers);
 };
 
-const getInsertionSortAnimations = numbers => {
+const getInsertionSortAnimations = (numbers) => {
   return insertionSort(numbers);
 };
 
-const insertionSort = arr => {
+const insertionSort = (arr) => {
   let len = arr.length;
   let animations = [];
 
@@ -46,7 +46,7 @@ const insertionSort = arr => {
   return animations;
 };
 
-const selectionSort = arr => {
+const selectionSort = (arr) => {
   let len = arr.length;
   let animations = [];
   for (let i = 0; i < len; i++) {
@@ -70,7 +70,7 @@ const swap = (arr, index1, index2) => {
   arr[index2] = temp;
 };
 
-const bubbleSort = arr => {
+const bubbleSort = (arr) => {
   let len = arr.length,
     i,
     j,
@@ -88,6 +88,18 @@ const bubbleSort = arr => {
   }
 
   return animations;
+};
+
+export const getRandomNumbers = (count) => {
+  let numbers = [];
+  for (let i = 0; i < count; i++) {
+    numbers.push(getRandomInt(3, 299));
+  }
+  return numbers;
+};
+
+const getRandomInt = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 export default getAnimations;
