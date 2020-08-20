@@ -1,96 +1,96 @@
-import React, { useState } from "react";
+import React from "react";
 
 import BarsContainer from "../../components/BarsContainer";
 
 import * as constants from "../../constants/constants";
-import getAnimations from "../../helpers/sortingHelper";
+import getAnimations, { getRandomNumbers } from "../../helpers";
 import InteractionBar from "../../components/InteractionBar/InteractionBar";
 
-const SortingVisualizer = () => {
-  const [sortDetails, setSortDetails] = useState({
-    sortType: constants.BUBBLE_SORT,
-    displayName: "Bubble Sort",
-    animationSpeed: 50,
-  });
+class SortingVisualizer extends React.Component {
+  constructor(props) {
+    super(props);
+    const numbers = getRandomNumbers(55);
+    const animations = getAnimations(constants.BUBBLE_SORT, numbers.slice());
+    this.state = {
+      sortDetails: {
+        sortType: constants.BUBBLE_SORT,
+        displayName: "Bubble Sort",
+        animationSpeed: 50,
+      },
+      numbers: numbers,
+      barCount: 55,
+      animationId: undefined,
+      animations: animations,
+    };
+  }
 
-  const [numbers, setNumbers] = useState(getRandomNumbers(55));
-
-  const [barCount, setBarCount] = useState(55);
-
-  const [animationId, setAnimationId] = useState(undefined);
-
-  const handleSortDetailsChange = (sortDetails) => {
-    handleReset();
-    setSortDetails(sortDetails);
+  handleSortDetailsChange = (sortDetails) => {
+    this.handleReset(sortDetails);
   };
 
-  const handleCommenceSort = () => {
-    const animations = getAnimations(sortDetails.sortType, numbers.slice());
-
-    if (animations === null || animations.length === 0) {
+  handleCommenceSort = () => {
+    if (this.state.animationId !== undefined) {
       return;
     }
 
-    let i = 0;
+    if (this.state.animations === null || this.state.animations.length === 0) {
+      return;
+    }
 
-    const animate = () => {
-      handleSwap(animations[i++]);
-      if (i < animations.length) {
-        setAnimationId(requestAnimationFrame(animate));
-      }
-    };
+    this.animate();
+  };
 
-    const handleSwap = (indices) => {
-      setNumbers((numbers) => {
-        const newNumbers = numbers.slice();
-        const number = newNumbers[indices[0]];
-        newNumbers[indices[0]] = newNumbers[indices[1]];
-        newNumbers[indices[1]] = number;
-        return newNumbers;
+  animate = (i = 0) => {
+    if (i < this.state.animations.length) {
+      this.handleSwap(this.state.animations[i]);
+      this.setState({
+        animationId: requestAnimationFrame(() => this.animate(i + 1)),
       });
-    };
-
-    setAnimationId(requestAnimationFrame(animate));
+    }
   };
 
-  const handleReset = () => {
+  handleSwap = (indices) => {
+    const newNumbers = this.state.numbers.slice();
+    const number = newNumbers[indices[0]];
+    newNumbers[indices[0]] = newNumbers[indices[1]];
+    newNumbers[indices[1]] = number;
+    this.setState({ numbers: newNumbers });
+  };
+
+  handleReset = (sortDetails = this.state.sortDetails) => {
+    cancelAnimationFrame(this.state.animationId);
+    const newNumbers = getRandomNumbers(this.state.barCount);
+    const animations = getAnimations(sortDetails.sortType, newNumbers.slice());
+    this.setState({
+      sortDetails: sortDetails,
+      animationId: undefined,
+      numbers: newNumbers,
+      animations: animations,
+    });
+  };
+
+  handleBarCountChange = (barCount) => {
     const newNumbers = getRandomNumbers(barCount);
-    cancelAnimationFrame(animationId);
-    setAnimationId(undefined);
-    setNumbers(newNumbers);
+    this.setState({ numbers: newNumbers, barCount: barCount });
   };
 
-  const handleBarCountChange = (barCount) => {
-    const newNumbers = getRandomNumbers(barCount);
-    setBarCount(barCount);
-    setNumbers(newNumbers);
-  };
-
-  return (
-    <div className="flex flex-col items-center w-full h-screen">
-      <BarsContainer numbers={numbers} />
-      <InteractionBar
-        barCount={barCount}
-        reset={() => handleReset()}
-        commence={() => handleCommenceSort()}
-        changeSortDetail={(sortDetails) => handleSortDetailsChange(sortDetails)}
-        changeBarCount={(value) => handleBarCountChange(value)}
-        sortDetail={sortDetails}
-      />
-    </div>
-  );
-};
-
-const getRandomNumbers = (count) => {
-  let numbers = [];
-  for (let i = 0; i < count; i++) {
-    numbers.push(getRandomInt(3, 299));
+  render() {
+    return (
+      <div className="flex flex-col items-center w-full h-screen">
+        <BarsContainer numbers={this.state.numbers} />
+        <InteractionBar
+          barCount={this.state.barCount}
+          reset={() => this.handleReset()}
+          commence={() => this.handleCommenceSort()}
+          changeSortDetail={(sortDetails) =>
+            this.handleSortDetailsChange(sortDetails)
+          }
+          changeBarCount={(value) => this.handleBarCountChange(value)}
+          sortDetail={this.state.sortDetails}
+        />
+      </div>
+    );
   }
-  return numbers;
-};
-
-const getRandomInt = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
+}
 
 export default SortingVisualizer;

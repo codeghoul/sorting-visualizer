@@ -12,25 +12,32 @@ const getAnimations = (sortType, numbers) => {
     case constants.INSERTION_SORT:
       animations = getInsertionSortAnimations(numbers);
       break;
+    case constants.QUICK_SORT:
+      animations = getQuickSortAnimations(numbers);
+      break;
     default:
       animations = [];
   }
   return animations;
 };
 
-const getBubbleSortAnimations = numbers => {
+const getBubbleSortAnimations = (numbers) => {
   return bubbleSort(numbers);
 };
 
-const getSelectionSortAnimations = numbers => {
+const getSelectionSortAnimations = (numbers) => {
   return selectionSort(numbers);
 };
 
-const getInsertionSortAnimations = numbers => {
+const getInsertionSortAnimations = (numbers) => {
   return insertionSort(numbers);
 };
 
-const insertionSort = arr => {
+const getQuickSortAnimations = (numbers) => {
+  return quickSortWrapper(numbers);
+};
+
+const insertionSort = (arr) => {
   let len = arr.length;
   let animations = [];
 
@@ -46,7 +53,7 @@ const insertionSort = arr => {
   return animations;
 };
 
-const selectionSort = arr => {
+const selectionSort = (arr) => {
   let len = arr.length;
   let animations = [];
   for (let i = 0; i < len; i++) {
@@ -70,7 +77,7 @@ const swap = (arr, index1, index2) => {
   arr[index2] = temp;
 };
 
-const bubbleSort = arr => {
+const bubbleSort = (arr) => {
   let len = arr.length,
     i,
     j,
@@ -88,6 +95,55 @@ const bubbleSort = arr => {
   }
 
   return animations;
+};
+
+const quickSortWrapper = (arr) => {
+  const animations = [];
+  quickSort(arr, animations, 0, arr.length - 1);
+  return animations;
+};
+
+const quickSort = (arr, animations, left, right) => {
+  let pivot, partitionIndex;
+
+  if (left < right) {
+    pivot = right;
+    partitionIndex = partition(arr, animations, pivot, left, right);
+
+    //sort left and right
+    quickSort(arr, animations, left, partitionIndex - 1);
+    quickSort(arr, animations, partitionIndex + 1, right);
+  }
+
+  return arr;
+};
+
+const partition = (arr, animations, pivot, left, right) => {
+  let pivotValue = arr[pivot],
+    partitionIndex = left;
+
+  for (var i = left; i < right; i++) {
+    if (arr[i] < pivotValue) {
+      animations.push([i, partitionIndex]);
+      swap(arr, i, partitionIndex);
+      partitionIndex++;
+    }
+  }
+  animations.push([right, partitionIndex]);
+  swap(arr, right, partitionIndex);
+  return partitionIndex;
+};
+
+export const getRandomNumbers = (count) => {
+  let numbers = [];
+  for (let i = 0; i < count; i++) {
+    numbers.push(getRandomInt(3, 299));
+  }
+  return numbers;
+};
+
+const getRandomInt = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 export default getAnimations;
