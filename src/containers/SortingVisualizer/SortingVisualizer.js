@@ -56,8 +56,8 @@ class SortingVisualizer extends React.Component {
   };
 
   handleReset = (sortDetails = this.state.sortDetails) => {
-    const newNumbers = getRandomNumbers(this.state.barCount);
     cancelAnimationFrame(this.state.animationId);
+    const newNumbers = getRandomNumbers(this.state.barCount);
     const animations = getAnimations(sortDetails.sortType, newNumbers.slice());
     this.setState({
       sortDetails: sortDetails,
